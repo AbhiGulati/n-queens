@@ -160,12 +160,31 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var n = this.get('n');
+      var diagStorage = [];
+      var that = this;
+      _.each(_.range(n), function(rowIndex) {
+        diagStorage.push([rowIndex, minorDiagonalColumnIndexAtFirstRow - rowIndex]);
+      });
+      diagStorage = _.filter(diagStorage, function(coords){
+        return coords[0] >= 0 && coords[0] < n && coords[1] >= 0 && coords[1] < n;
+      });
+      diagStorage = _.map(diagStorage, function(coords) {
+        return that.get(coords[0])[coords[1]];
+      });
+      reduceDiag = _.reduce(diagStorage, function(a, b) {
+        return a + b;
+      });
+      return (reduceDiag > 1);
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      var n = this.get('n');
+      var board = this;
+      return _.some(_.range(2*n - 1), function(diagIndex) {
+        return board.hasMinorDiagonalConflictAt(diagIndex);
+      });
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
