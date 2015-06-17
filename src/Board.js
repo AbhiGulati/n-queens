@@ -79,12 +79,20 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var row = this.get(rowIndex);
+      var reducedRow = _.reduce(row, function(a,b) {
+        return a + b;
+      });
+      return (reducedRow > 1);
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var n = this.get('n');
+      var board = this;
+      return _.some(_.range(n), function(rowIndex){
+        return board.hasRowConflictAt(rowIndex);
+      });
     },
 
 
@@ -94,12 +102,21 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var rows = this.rows();
+      var col = _.pluck(rows, colIndex);
+      var reducedCol = _.reduce(col, function(a,b) {
+        return a + b;
+      });
+      return (reducedCol > 1);
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var n = this.get('n');
+      var board = this;
+      return _.some(_.range(n), function(colIndex){
+        return board.hasColConflictAt(colIndex);
+      });
     },
 
 
@@ -109,12 +126,31 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var n = this.get('n');
+      var diagStorage = [];
+      var that = this;
+      _.each(_.range(n), function(rowIndex) {
+        diagStorage.push([rowIndex, rowIndex + majorDiagonalColumnIndexAtFirstRow]);
+      });
+      diagStorage = _.filter(diagStorage, function(coords){
+        return coords[0] >= 0 && coords[0] < n && coords[1] >= 0 && coords[1] < n;
+      });
+      diagStorage = _.map(diagStorage, function(coords) {
+        return that.get(coords[0])[coords[1]];
+      });
+      reduceDiag = _.reduce(diagStorage, function(a, b) {
+        return a + b;
+      });
+      return (reduceDiag > 1);
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var n = this.get('n');
+      var board = this;
+      return _.some(_.range(-n + 1, n), function(diagIndex) {
+        return board.hasMajorDiagonalConflictAt(diagIndex);
+      });
     },
 
 
