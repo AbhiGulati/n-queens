@@ -33,7 +33,7 @@ window.findNRooksSolution = function(n) {
     return undefined;
   }
 
-  solution = fillRowWithRook(0, solution);
+  fillRowWithRook(0, solution);
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution.rows();
 };
@@ -83,11 +83,11 @@ window.findNQueensSolution = function(n) {
   var solution = new Board({ n : n });
 
   var fillRowWithQueen = function(r, board) {
-    var printBoard = function() {
-      for(var i=0; i < n; i++) {
-        console.log(board.get(i));
-      }
-    }
+    // var printBoard = function() {
+    //   for(var i=0; i < n; i++) {
+    //     console.log(board.get(i));
+    //   }
+    // }
 
     for(var i = 0; i < n; i++) {
       board.togglePiece(r, i);
@@ -109,12 +109,10 @@ window.findNQueensSolution = function(n) {
 
     if(r === 0) {
       return new Board({ n : n });
-    } else {
-      return undefined;
-    }
+      };
   }
 
-  solution = fillRowWithQueen(0, solution);
+  fillRowWithQueen(0, solution);
 
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
