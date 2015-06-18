@@ -14,12 +14,12 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 window.findNRooksSolution = function(n) {
-  var solution = new Board({ n : n});
+  var solution = new Board({ n : n });
 
   var fillRowWithRook = function(r, board) {
     for(var i = 0; i < n; i++) {
-      board.togglePiece(r,i);
-      if(!board.hasAnyRooksConflicts()) { // write hasAnyRooksConflictsOn(r,c) to optimize this
+      board.togglePiece(r, i);
+      if(!board.hasAnyRooksConflictsOn(r, i)) { // write hasAnyRooksConflictsOn(r,c) to optimize this
         if(r === n - 1) {
           return board;
         } else {
@@ -49,7 +49,7 @@ window.countNRooksSolutions = function(n) {
 
     for(var i = 0; i < n; i++) {
       board.togglePiece(r, i);
-      if(!board.hasAnyRooksConflicts()) { // write hasAnyRooksConflictsOn(r,c) to optimize this
+      if(!board.hasAnyRooksConflictsOn(r,i)) { // write hasAnyRooksConflictsOn(r,c) to optimize this
         if(r === n - 1) {
           solutionCount++;
           board.togglePiece(r, i);
@@ -90,8 +90,8 @@ window.findNQueensSolution = function(n) {
     }
 
     for(var i = 0; i < n; i++) {
-      board.togglePiece(r,i);
-      if(!board.hasAnyQueenConflictsOn(r,i)) {
+      board.togglePiece(r, i);
+      if(!board.hasAnyQueenConflictsOn(r, i)) {
         if(r === n - 1) {
           return board;
         } else {
@@ -136,7 +136,7 @@ window.countNQueensSolutions = function(n) {
 
     for(var i = 0; i < n; i++) {
       board.togglePiece(r,i);
-      if(!board.hasAnyQueenConflictsOn(r,i)) {
+      if(!board.hasAnyQueenConflictsOn(r, i)) {
         if(r === n - 1) {
           solutionCount++;
           board.togglePiece(r, i);
