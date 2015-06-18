@@ -56,7 +56,7 @@ window.countNRooksSolutions = function(n) {
   var fillRowWithRook = function(r) {
     for(var i = 0; i < n; i++) {
       board.togglePiece(r, i);
-      if(!board.hasAnyRooksConflictsOn(r,i)) { // write hasAnyRooksConflictsOn(r,c) to optimize this
+      if(!board.hasAnyRooksConflictsOn(r,i)) {
         if(r === n - 1) {
           solutionCount++;
         } else {
